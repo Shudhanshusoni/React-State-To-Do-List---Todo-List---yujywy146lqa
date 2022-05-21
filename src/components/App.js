@@ -61,7 +61,7 @@ const uplists=lists.filter((ele)=> ele.id!==ind)
             onChange={(e) => setUpdate(e.target.value)}
             value={update}
           />
-          <button className="saveTask" onClick={()=>saved(ele.name)}>
+          <button className="saveTask" onClick={()=>saved()}>
             Save
           </button></>
     }
