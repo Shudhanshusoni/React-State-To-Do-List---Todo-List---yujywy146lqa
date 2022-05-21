@@ -4,50 +4,74 @@ import "./../styles/App.css";
 function App() {
 const [lists,setLists]=useState();
 const [item,setItem]=useState([]);
+const [toggle,setToggle]=useState(true);
 const [edit,setEdit]=useState();
 const [update,setUpdate]=useState();
-const click=(e)=>{
-	e.preventDefault();
-	setItem=((oldval)=>{
-      return [...oldval,lists]
-	})
-   setLists("");
+const click=()=>{
+	if(!lists){
+
+	}else{
+		const allList={id:new Date().toTimeString()}
+		setitems([...allList,lists])
+		setLists(" ");
+	}
 }
-const edits=(id)=>{
-	const edited=lists.find((ele,ind)=>{
+const saved = () => {
+    if (!update) {
+    } 
+     else if (update && !toggle) {
+      setItem(() => {
+        item.map((ele) => {
+          if (ele.id === edit) {
+            return {...ele, name: update};
+          }
+          return ele;
+        });
+      });
+      setToggle(true);
+      setUpdate("");
+      setEdit(null);
+    }
+  };
+const edits=(ind)=>{
+	const edited=lists.find((ele)=>{
 		return(<>
-		ind===id
+		ind===ele.id
 		</>) 
 	});
-	setEdit(edited);
-}
-const updates=()=>{
-	return(
-		<>
-		<input className="editTask" type="text" value={edit} onChange={(e)=>setUpdate(e.target.value)}/>
-		<button className="saveTask" onClick={()=>setItem(update)}>Save</button>
-		</>
-	)
+	setToggle(false);
+	setUpdate(edited.name);
+	setEdit(ind);
 }
 
-const del=(id)=>{
-const uplists=lists.filter((ele,ind)=> id!==ind)
+const del=(ind)=>{
+const uplists=lists.filter((ele)=> ele.id!==ind)
    setLists([...uplists]);
 }
 
-	return (
+	return ( 
 	<div id="main">
 	//Do not alter main div
 	//Please do not alter the functional component as tests depend on the type of component.
+	{ 
+	toggle?
+	<>
 	<input id="task" type="text" placeholder="Add Task" onChange={(e)=>setLists(e.target.value)} value={lists} />
-	<Button id="btn" onClick={click}>ADD Task</Button>
+	<Button id="btn" onClick={click}>ADD Task</Button></>:<><input   className="editTask" type="text"
+            onChange={(e) => setUpdate(e.target.value)}
+            value={update}
+          />
+          <button className="saveTask" onClick={saved}>
+            Save
+          </button></>
+    }
     {
-		item.map((cur,ind)=>{
+		item.map((ele)=>{
 			return(
-				<ul key={ind}>
-					<li className="list">{cur}</li>
-					<button className="edit" onClick={()=>edits(ind)}>edit</button>
-					<button className="delete" onClick={()=>del(ind)}>delete</button>
+				<ul key={ele.id}>
+					<li className="list">{ele}</li>
+					<button className="edit" onClick={()=>edits(ele.id)}>edit</button>
+					<button className="delete" onClick={()=>del(ele.id)}>delete</button>
 				</ul>
 			)
 		})
