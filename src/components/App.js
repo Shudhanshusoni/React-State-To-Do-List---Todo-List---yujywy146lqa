@@ -57,11 +57,11 @@ const uplists=lists.filter((ele)=> ele.id!==ind)
 	toggle?
 	<>
 	<input id="task" type="text" placeholder="Add Task" onChange={(e)=>setLists(e.target.value)} value={lists} />
-	<Button id="btn" onClick={click}>ADD Task</Button></>:<><input   className="editTask" type="text"
+	<button id="btn" onClick={click}>ADD Task</button></>:<><input   className="editTask" type="text"
             onChange={(e) => setUpdate(e.target.value)}
             value={update}
           />
-          <button className="saveTask" onClick={saved}>
+          <button className="saveTask" onClick={()=>saved(ele.name)}>
             Save
           </button></>
     }
